@@ -33,6 +33,8 @@ public class Cell : MonoBehaviour
     private bool _textErase = false;
     private bool _sudeniOwatta = false;
     public bool _openFlag = false;
+    private GameObject _player;
+    Animator _anim = null;
 
     public CellState CellState
     {
@@ -56,6 +58,8 @@ public class Cell : MonoBehaviour
         text.SetActive(false);
         _object = GameObject.Find("Minesweeper");
         _gameManager = _object.GetComponent<MinesweeperGameManager>();
+        _player = GameObject.Find("Player");
+        _anim = _player.GetComponent<Animator>();
     }
 
     private void OnCellStateChanged()
@@ -96,6 +100,7 @@ public class Cell : MonoBehaviour
         if (_cellState == CellState.Mine)
         {
             _gameManager._playerLife--;
+            _anim.SetTrigger("Damage");
         }
         else
         {

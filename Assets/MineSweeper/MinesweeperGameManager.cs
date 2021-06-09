@@ -175,6 +175,7 @@ public class MinesweeperGameManager : MonoBehaviour
             }
         }
     }
+
     /// <summary>
     /// ƒQ[ƒ€‚ÌI—¹”»’è
     /// </summary>
@@ -190,6 +191,8 @@ public class MinesweeperGameManager : MonoBehaviour
             //”s–k‰æ–Ê
             _end.SetActive(true);
             _loseText.SetActive(true);
+            Destroy(_player);
+            Destroy(_enemy);
             _isEnd = true;
         }
         if (_EnemyLife <= 0)
@@ -197,6 +200,8 @@ public class MinesweeperGameManager : MonoBehaviour
             //Ÿ—˜‰æ–Ê
             _end.SetActive(true);
             _winText.SetActive(true);
+            Destroy(_player);
+            Destroy(_enemy);
             _isEnd = true;
         }
     }
