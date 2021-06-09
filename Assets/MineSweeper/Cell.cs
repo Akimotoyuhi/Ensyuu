@@ -34,7 +34,10 @@ public class Cell : MonoBehaviour
     private bool _sudeniOwatta = false;
     public bool _openFlag = false;
     private GameObject _player;
-    Animator _anim = null;
+    Animator _pAnim = null;
+    private GameObject _enemy;
+    Animator _eAnim = null;
+
 
     public CellState CellState
     {
@@ -59,7 +62,9 @@ public class Cell : MonoBehaviour
         _object = GameObject.Find("Minesweeper");
         _gameManager = _object.GetComponent<MinesweeperGameManager>();
         _player = GameObject.Find("Player");
-        _anim = _player.GetComponent<Animator>();
+        _pAnim = _player.GetComponent<Animator>();
+        _enemy = GameObject.Find("Enemy");
+        _eAnim = _enemy.GetComponent<Animator>();
     }
 
     private void OnCellStateChanged()
@@ -100,11 +105,13 @@ public class Cell : MonoBehaviour
         if (_cellState == CellState.Mine)
         {
             _gameManager._playerLife--;
-            _anim.SetTrigger("Damage");
+            _pAnim.SetTrigger("Damage");
         }
-        else
+        else if (_enemy)
         {
             _gameManager._EnemyLife--;
+            _eAnim.SetTrigger("Damage");
+            _gameManager.EnemyDamageEffect();
         }
         GameObject button = transform.Find("Button").gameObject;
         Destroy(button);

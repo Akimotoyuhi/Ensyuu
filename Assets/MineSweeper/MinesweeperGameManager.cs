@@ -34,6 +34,8 @@ public class MinesweeperGameManager : MonoBehaviour
     private bool _isEnd = false;
     private GameObject _winText;
     private GameObject _loseText;
+    [SerializeField] private GameObject _damagePrefab = null;
+    private Vector3 _vec;
     private void OnValidate()
     {
         if (_columns < _rows)
@@ -57,6 +59,7 @@ public class MinesweeperGameManager : MonoBehaviour
         _winText.SetActive(false);
         _loseText = GameObject.Find("LoseText");
         _loseText.SetActive(false);
+        _vec = _enemy.transform.position;
         var parent = _gridLayoutGroup.gameObject.transform;
         _cells = new Cell[_rows, _columns];
 
@@ -174,6 +177,12 @@ public class MinesweeperGameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void EnemyDamageEffect()
+    {
+        GameObject t =  Instantiate(_damagePrefab, _vec, _damagePrefab.transform.rotation);
+        t.transform.SetParent(_enemy.transform);
     }
 
     /// <summary>
