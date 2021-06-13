@@ -37,6 +37,12 @@ public class MinesweeperGameManager : MonoBehaviour
     [SerializeField] private GameObject _damagePrefab = null;
     private Vector3 _vec;
     private Quaternion _quat;
+
+    private AudioSource _as;
+    //[SerializeField] private AudioClip _bgm;
+    [SerializeField] private AudioClip _winSe;
+    [SerializeField] private AudioClip _loseSe;
+
     private void OnValidate()
     {
         if (_columns < _rows)
@@ -60,7 +66,8 @@ public class MinesweeperGameManager : MonoBehaviour
         _winText.SetActive(false);
         _loseText = GameObject.Find("LoseText");
         _loseText.SetActive(false);
-        //_vec = _enemy.transform.position;
+        _as = GetComponent<AudioSource>();
+
         var parent = _gridLayoutGroup.gameObject.transform;
         _cells = new Cell[_rows, _columns];
 
@@ -203,6 +210,8 @@ public class MinesweeperGameManager : MonoBehaviour
             //îsñkâÊñ 
             _end.SetActive(true);
             _loseText.SetActive(true);
+            _as.Stop();
+            _as.PlayOneShot(_loseSe);
             Destroy(_player);
             Destroy(_enemy);
             _isEnd = true;
@@ -212,6 +221,8 @@ public class MinesweeperGameManager : MonoBehaviour
             //èüóòâÊñ 
             _end.SetActive(true);
             _winText.SetActive(true);
+            _as.Stop();
+            _as.PlayOneShot(_winSe);
             Destroy(_player);
             Destroy(_enemy);
             _isEnd = true;
