@@ -31,7 +31,6 @@ public class Cell : MonoBehaviour
 
     GameObject text = null;
     private bool _textErase = false;
-    private bool _sudeniOwatta = false;
     public bool _openFlag = false;
     private GameObject _player;
     Animator _pAnim = null;
@@ -53,6 +52,9 @@ public class Cell : MonoBehaviour
             OnCellStateChanged();
         }
     }
+
+    //Action<Cell> _opened { get; set; }
+    //public void AddOpened(action<Cell> opened);
 
     private void OnValidate()
     {
@@ -100,13 +102,13 @@ public class Cell : MonoBehaviour
     /// <param name="flag"></param>
     public void IsOpen()
     {
-        _openFlag = true;
-
         //既に開いているセルなら何もしない
-        if (_sudeniOwatta)
+        if (_openFlag)
         {
             return;
         }
+
+        _openFlag = true;
 
         if (_cellState == CellState.Mine)
         {
@@ -123,10 +125,9 @@ public class Cell : MonoBehaviour
         }
         GameObject button = transform.Find("Button").gameObject;
         Destroy(button);
-        _sudeniOwatta = true;
     }
     /// <summary>
-    /// クリックを検出してセルを開けるフラグをオンにしたり旗立てたりする
+    /// クリックを検出してセル開けたり旗立てたりする
     /// </summary>
     public void OnClick()
     {

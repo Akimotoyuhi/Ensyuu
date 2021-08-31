@@ -57,14 +57,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\MineSweeper\Scripts\GameEnd.cs" />
+    <Compile Include="Assets\Riversi\Scripts\RiversiCell.cs" />
     <Compile Include="Assets\MineSweeper\Scripts\Cell.cs" />
     <Compile Include="Assets\MineSweeper\Scripts\MinesweeperGameManager.cs" />
     <Compile Include="Assets\Scripts\MinesweeperSample.cs" />
     <Compile Include="Assets\MineSweeper\Scripts\GameStart.cs" />
     <Compile Include="Assets\Scripts\Sample1.cs" />
     <Compile Include="Assets\MineSweeper\Scripts\SceneChanger.cs" />
+    <Compile Include="Assets\Riversi\Scripts\RiversiGameManager.cs" />
     <Compile Include="Assets\Scripts\Sample2.cs" />
     <Compile Include="Assets\MineSweeper\Scripts\DamageImageRemoved.cs" />
+    <Compile Include="Assets\Bingo\Scripts\BingoGameManager.cs" />
+    <Compile Include="Assets\Bingo\Scripts\BingoCell.cs" />
+    <Compile Include="Assets\Bingo\Scripts\NumberGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
