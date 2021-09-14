@@ -20,7 +20,6 @@ public class NumberGenerator : MonoBehaviour
     public void Generate()
     {
         int n = Random.Range(1, 100);
-        Debug.Log(n);
         //既に出た数値が出たらもう一度抽選する機能入れろ
         m_list.Add(n);
         m_text.text = $"{n}";

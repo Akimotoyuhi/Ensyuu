@@ -61,16 +61,58 @@ public class BingoGameManager : MonoBehaviour
     /// <param name="num">生成された番号</param>
     public void GetNumber(int num)
     {
-        Debug.Log("GetNumber");
         for (int r = 0; r < m_rows; r++)
         {
             for (int c = 0; c < m_columns; c++)
             {
+                //生成した番号がビンゴカードにあったらそのセルを開ける
                 if (m_cells[r, c].m_num == num)
                 {
                     m_cells[r, c].m_bingoCellState = BingoCellState.open;
                     m_cells[r, c].CellStateChanged();
+
+                    BingoChack(r, c);
+                    /*
+                    if (top >= 0)
+                    {
+                        if (left >= 0) { m_cells[top, left].IsOpen(); }
+                        if (right < m_columns) { m_cells[top, right].IsOpen(); }
+                        m_cells[top, c].IsOpen();
+                    }
+                    if (left >= 0) { m_cells[r, left].IsOpen(); }
+                    if (right < m_columns) { m_cells[r, right].IsOpen(); }
+                    if (bottom < m_rows)
+                    {
+                        if (left >= 0) { m_cells[bottom, left].IsOpen(); }
+                        if (right < m_columns) { m_cells[bottom, right].IsOpen(); }
+                        m_cells[bottom, c].IsOpen();
+                    }
+                    */
                 }
+            }
+        }
+    }
+
+    public void BingoChack(int r, int c)
+    {
+        var left = c + 1;
+        var right = c - 1;
+        var top = r - 1;
+        var bottom = r + 1;
+        //上調べる
+        if (top >= 0 && left >= 0)
+        {
+
+        }
+        if (top >= 0 && right < m_columns)
+        {
+
+        }
+        if (top >= 0)
+        {
+            if (m_cells[top, c].m_bingoCellState == BingoCellState.open)
+            {
+
             }
         }
     }
