@@ -33,14 +33,16 @@ public class SceneChanger : MonoBehaviour
 
     public void NormalScene()
     {
-        _as.PlayOneShot(_se);
-        SceneManager.LoadScene("MinesweeperNormal");
+        Debug.Log("çHéñíÜ");
+        //_as.PlayOneShot(_se);
+        //SceneManager.LoadScene("MinesweeperNormal");
     }
 
     public void HardScene()
     {
-        _as.PlayOneShot(_se);
-        SceneManager.LoadScene("MinesweeperHard");
+        Debug.Log("çHéñíÜ");
+        //_as.PlayOneShot(_se);
+        //SceneManager.LoadScene("MinesweeperHard");
     }
 
     public void MinesweeperButton()
