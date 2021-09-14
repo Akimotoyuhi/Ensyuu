@@ -21,7 +21,10 @@ public class BingoGameManager : MonoBehaviour
 
     private BingoCell[,] m_cells;
 
-    private int m_selectedNum;
+    private bool m_isEnd = false;
+
+    [SerializeField]
+    private GameObject m_gameEndObj;
 
     private void OnValidate()
     {
@@ -39,15 +42,18 @@ public class BingoGameManager : MonoBehaviour
 
     void Start()
     {
+        m_gameEndObj.SetActive(false);
         var parent = m_gridLayoutGroup.gameObject.transform;
         m_cells = new BingoCell[m_rows, m_columns];
 
+        //ビンゴカード作成
         for (var r = 0; r < m_rows; r++)
         {
             for (var c = 0; c < m_columns; c++)
             {
                 var cell = Instantiate(m_cellPrefab);
                 cell.transform.SetParent(parent);
+                cell.name = $"{r} {c}";
                 int num = Random.Range(1, 100);
                 cell.GetComponent<BingoCell>().m_num = num;
                 m_cells[r, c] = cell;
@@ -71,49 +77,92 @@ public class BingoGameManager : MonoBehaviour
                     m_cells[r, c].m_bingoCellState = BingoCellState.open;
                     m_cells[r, c].CellStateChanged();
 
-                    BingoChack(r, c);
-                    /*
-                    if (top >= 0)
-                    {
-                        if (left >= 0) { m_cells[top, left].IsOpen(); }
-                        if (right < m_columns) { m_cells[top, right].IsOpen(); }
-                        m_cells[top, c].IsOpen();
-                    }
-                    if (left >= 0) { m_cells[r, left].IsOpen(); }
-                    if (right < m_columns) { m_cells[r, right].IsOpen(); }
-                    if (bottom < m_rows)
-                    {
-                        if (left >= 0) { m_cells[bottom, left].IsOpen(); }
-                        if (right < m_columns) { m_cells[bottom, right].IsOpen(); }
-                        m_cells[bottom, c].IsOpen();
-                    }
-                    */
+                    HeightBingoCheck(0, c);
+                    SideBingoCheck(r, 0);
+                    LeftCrossBingoCheck();
+                    RightCrossBingoCheck();
                 }
             }
         }
     }
 
-    public void BingoChack(int r, int c)
+    private void HeightBingoCheck(int r, int c)
     {
-        var left = c + 1;
-        var right = c - 1;
-        var top = r - 1;
-        var bottom = r + 1;
-        //上調べる
-        if (top >= 0 && left >= 0)
-        {
+        int bottom = r + 1;
 
-        }
-        if (top >= 0 && right < m_columns)
+        if (m_cells[r, c].m_bingoCellState == BingoCellState.open)
         {
-
-        }
-        if (top >= 0)
-        {
-            if (m_cells[top, c].m_bingoCellState == BingoCellState.open)
+            if (bottom < m_rows)
             {
-
+                HeightBingoCheck(bottom, c);
+            }
+            else
+            {
+                GameEnd();
             }
         }
+    }
+
+    private void SideBingoCheck(int r, int c)
+    {
+        int left = c + 1;
+
+        if (m_cells[r, c].m_bingoCellState == BingoCellState.open)
+        {
+            if (left < m_columns)
+            {
+                HeightBingoCheck(r, left);
+            }
+            else
+            {
+                GameEnd();
+            }
+        }
+    }
+
+    private void LeftCrossBingoCheck(int r = 0, int c = 0)
+    {
+        int bottom = r + 1;
+        int right = c + 1;
+
+        if (m_cells[r, c].m_bingoCellState == BingoCellState.open)
+        {
+            if (bottom < m_rows && right < m_columns)
+            {
+                HeightBingoCheck(bottom, right);
+            }
+            else
+            {
+                GameEnd();
+            }
+        }
+    }
+
+    private void RightCrossBingoCheck(int r = 0, int c = 4)
+    {
+        int bottom = r + 1;
+        int left = c - 1;
+
+        if (m_cells[r, c].m_bingoCellState == BingoCellState.open)
+        {
+            if (bottom < m_rows && left >= 0)
+            {
+                HeightBingoCheck(bottom, left);
+            }
+            else
+            {
+                GameEnd();
+            }
+        }
+    }
+
+    private void GameEnd()
+    {
+        if (m_isEnd)
+        {
+            return;
+        }
+        m_isEnd = true;
+        m_gameEndObj.SetActive(true);
     }
 }
